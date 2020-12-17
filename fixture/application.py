@@ -2,6 +2,7 @@ from selenium import webdriver
 
 from fixture.james_helper import JamesHelper
 from fixture.mail_helper import MailHelper
+from fixture.project_helper import ProjectHelper
 from fixture.session_helper import SessionHelper
 from fixture.signup_helper import SignupHelper
 from fixture.soap_helper import SoapHelper
@@ -24,6 +25,7 @@ class Application:
         self.signup = SignupHelper(self)
         self.mail = MailHelper(self)
         self.soap = SoapHelper(self)
+        self.project = ProjectHelper(self)
         self.config = config
         self.base_url = config['web']['baseUrl']
 
