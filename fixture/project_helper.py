@@ -1,6 +1,9 @@
 from __future__ import annotations
+
+import time
 from typing import TYPE_CHECKING
 
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.select import Select
 
 if TYPE_CHECKING:
@@ -23,6 +26,28 @@ class ProjectHelper:
     def verify_project_created(self, project: Project):
         driver = self.app.wd
         assert driver.find_element_by_link_text(project.name) is not None
+
+    def open_project_edit(self, project: Project):
+        driver = self.app.wd
+        driver.find_element_by_link_text(project.name).click()
+
+    def delete_project(self, project: Project):
+        driver = self.app.wd
+        self.open_project_edit(project)
+        driver.find_element_by_xpath("//input[@value='Delete Project']").click()
+        time.sleep(3)
+        driver.find_element_by_xpath("//input[@value='Delete Project']").click()
+
+    def verify_project_deleted(self, project: Project):
+        driver = self.app.wd
+        element_found = False
+        try:
+            driver.find_element_by_link_text(project.name)
+            element_found = True
+        except NoSuchElementException as e:
+            element_found = False
+        if element_found:
+            raise AssertionError("project was not deleted")
 
     def create_new(self, project: Project):
         driver = self.app.wd
