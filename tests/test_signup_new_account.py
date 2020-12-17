@@ -3,7 +3,7 @@ import random
 
 
 def random_username(prefix, maxlen):
-    symbols = string.ascii_letters
+    symbols = string.ascii_letters.lower()
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
