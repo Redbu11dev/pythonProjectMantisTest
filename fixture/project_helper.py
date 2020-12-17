@@ -27,6 +27,15 @@ class ProjectHelper:
         driver = self.app.wd
         assert driver.find_element_by_link_text(project.name) is not None
 
+    def verify_project_created_by_soap(self, project: Project):
+        all_projects = self.app.soap.get_all_projects("administrator", "root")
+        for proj in all_projects:
+            # a = proj
+            if proj.name == project.name:
+                break
+        else:
+            raise ValueError("project is not in the list")
+
     def open_project_edit(self, project: Project):
         driver = self.app.wd
         driver.find_element_by_link_text(project.name).click()
@@ -48,6 +57,13 @@ class ProjectHelper:
             element_found = False
         if element_found:
             raise AssertionError("project was not deleted")
+
+    def verify_project_deleted_by_soap(self, project: Project):
+        all_projects = self.app.soap.get_all_projects("administrator", "root")
+        for proj in all_projects:
+            # a = proj
+            if proj.name == project.name:
+                raise AssertionError("project was not deleted")
 
     def create_new(self, project: Project):
         driver = self.app.wd
