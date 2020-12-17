@@ -1,5 +1,6 @@
 from selenium import webdriver
 
+from fixture.james_helper import JamesHelper
 from fixture.session_helper import SessionHelper
 
 
@@ -16,6 +17,7 @@ class Application:
 
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
+        self.james = JamesHelper(self)
         self.base_url = base_url
 
     def destroy(self):
